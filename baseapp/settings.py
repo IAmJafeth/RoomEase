@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account',
+    'roomreservation',
+    'twiliosms',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +81,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'RoomReservation',
+    #     'USER': 'django',
+    #     'PASSWORD': 'djangotest',
+    #     'HOST': '192.168.100.3',
+    #     'PORT': '3306',
+    # }
 }
 
 
