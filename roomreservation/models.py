@@ -9,6 +9,7 @@ class Room(models.Model):
     room_capacity = models.IntegerField()
     room_description = models.TextField()
     room_status = models.BooleanField(default=True)
+    room_pic = models.ImageField(upload_to='room_pics', null=True, blank=True, default='room_pics/default.jpg')
     active = models.BooleanField(default=True)
 
 class Reservation(models.Model):
