@@ -3,5 +3,62 @@
 {% block title %} Rooms {% endblock title %}
 
 {% block content %}
-    bs5-card
+
+    <div class="container">
+        <div class="row">
+            {% if rooms %}
+                {% for room in rooms %}
+                    <div class="container col-xxl-8 px-4 py-5 ">
+                        <div class="row flex-lg-row-reverse align-items-center g-5 pb-5 bg-opacity-10 card ">
+                            <div class="col-10 col-sm-8 col-lg-6">
+                                <img src="/media/{{room.room_pic}}" class="d-block mx-lg-auto img-fluid rounded-2" alt="{{room.room_name}} picture" width="350" height="233" loading="lazy">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card-body">
+                                    <h2 class="card-title">{{room.room_name}}</h2>
+                                    <p class="card-text">{{room.room_description}}</p>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Capacity: {{room.room_capacity}}</li>
+                                        <li class="list-group-item">Status: {% if room.room_status %}
+                                            <span class="badge bg-success">Available</span>
+                                            {% else %}
+                                            <span class="badge bg-danger">Not Available</span>
+                                        {% endif %}</li>
+                                    </ul>
+                                </div>
+                                <div class="d-grid gap-0 d-md-flex justify-content-md-start">
+                                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 m-1">Reserve</button>
+                                <!-- <button type="button" class="btn btn-outline-secondary btn-lg px-4 m-1">Default</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock content %}
+
+
+
+
+
+
+                    <div class="card" style="width: 18rem;">
+                        <img src="/media/{{room.room_pic}}" class="card-img-top img-fluid" alt="{{room.room_name}} picture" style="object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{room.room_name}}</h5>
+                            <p class="card-text">{{room.room_description}}</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Capacity: {{room.room_capacity}}</li>
+                                <li class="list-group-item">Status: {% if room.room_status %}
+                                    <span class="badge bg-success">Available</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Not Available</span>
+                                {% endif %}</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary my-2">Reserve</a>
+                        </div>
+                    </div>
