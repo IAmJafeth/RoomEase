@@ -4,35 +4,83 @@
 
 {% block content %}
     <div class="container" style="max-width:500px;">
+        {% if user_form.errors %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <div>
+                <i class="fas fa-exclamation-triangle"></i>
+            
+                    {% for field in user_form %}
+                        {% for error in field.errors %}
+                                {{ error|escape }} <br>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>  
+        {% endif %}
+        {% if account_form.errors %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <div>
+                <i class="fas fa-exclamation-triangle"></i>
+            
+                    {% for field in account_form %}
+                        {% for error in field.errors %}
+                                {{ error|escape }} <br>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>  
+        {% endif %}
         <form class="border border-dark-subtle p-5 bg-dark bg-opacity-25 rounded-3" method="POST">
             {% csrf_token %}
             <img class="mb-4" src="{% static 'img/RoomEaseLogoNTNB.png' %}" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
             <div class="form-floating">
-            {{signup_form.username}}
+            {{user_form.first_name}}
+            <label for="id_first_name">First Name</label>
+            </div>
+
+            <div class="form-floating">
+            {{user_form.last_name}}
+            <label for="id_last_name">Last Name</label>
+            </div>
+
+            <div class="form-floating">
+            {{user_form.username}}
             <label for="id_username">Username</label>
             </div>
 
             <div class="form-floating">
-            {{signup_form.email}}
+            {{user_form.email}}
             <label for="id_email">Email address</label>
             </div>
 
+            <div class="input-group">
+                <span class="input-group-text">+506</span>
+                <div class="form-floating">
+                    {{account_form.phone}}
+                    <label for="id_phone">Phone Number</label>
+                </div>
+            </div>
+
             <div class="form-floating">
-            {{signup_form.password1}}
+            {{user_form.password1}}
             <label for="id_password1">Password</label>
             </div>
 
             <div class="form-floating">
-            {{signup_form.password2}}
+            {{user_form.password2}}
             <label for="id_password2">Password Confirmation</label>
             </div>
 
             <button class="btn btn-primary w-100 py-2 mt-5" type="submit" >Sign Up</button>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; {% now 'Y' %}</p>
         </form>
+
     </div>
 {% endblock content %}
-
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+                <div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div>  
 <button class="btn btn-primary w-100 py-2 mt-5" type="submit" >Sign Up</button>

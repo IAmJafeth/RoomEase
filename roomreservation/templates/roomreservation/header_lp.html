@@ -1,16 +1,15 @@
 {% load static %}
 
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <div class="col-md-3 mb-2 mb-md-0 ms-3">
-                <a href="/" class="d-inline link-body-emphasis text-decoration-none">
-                    <img src="{% static 'img/RoomEaseLogoNTNB.png' %}" alt="RoomEaseLogo" width="32" height="32" class="rounded-circle me-2">
-                    <p class="d-inline my-5 fs-5">Room<span class="text-primary-emphasis">Ease</span></>
-                </a>
-            </div>
+    <div class="col-12 col-md-3 mb-2 mb-md-0 text-center text-md-start ms-lg-3">
+        <a href="/" class="d-inline link-body-emphasis text-decoration-none">
+            <img src="{% static 'img/RoomEaseLogoNTNB.png' %}" alt="RoomEaseLogo" width="32" height="32" class="rounded-circle me-2">
+            <p class="d-inline my-5 fs-5">Room<span class="text-primary-emphasis">Ease</span></p>
+        </a>
+    </div>
 
-            <div class="col-md-3 text-end me-3">
-                <a type="button" class="btn btn-outline-primary me-2" href="{% url 'login'%}">Login</a>
-                <a type="button" class="btn btn-primary" href="{% url 'signup'%}">Sign-up</a>
-            </div>
-
+    <div class="col-12 col-md-3 text-center text-md-end me-lg-3">
+        <a type="button" class="btn btn-outline-primary me-2" href="{% url 'login'%}">Login</a>
+        <a type="button" class="btn btn-primary" href="{% url 'signup'%}">Sign-up</a>
+    </div>
 </header>

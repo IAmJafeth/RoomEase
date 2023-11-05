@@ -5,39 +5,57 @@
 {% block content %}
 
     <div class="container" style="max-width:500px;">
+        {% if form.errors %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <div>
+                <i class="fas fa-exclamation-triangle"></i>
+                    {{ form.non_field_errors|escape }}
+                    {{ form.password.errors }}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                                {{ error|escape }} <br>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>  
+        {% endif %}
+
+        {% if success %}
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+            <div>
+                <i class="fas fa-check-circle"></i>
+                    Your account has been created successfully!
+                </div>
+            </div>
+        {% endif %}
+
         <form class="border border-dark-subtle p-5 bg-dark bg-opacity-25 rounded-3" method="POST">
             
             {% csrf_token %}
             <img class="mb-4" src="{% static 'img/RoomEaseLogoNTNB.png' %}" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
             <div class="form-floating">
             {{form.username}}
             <label for="id_username">Username</label>
             </div>
+
             <div class="form-floating">
             {{form.password}}
             <label for="id_password">Password</label>
             </div>
+
             <div class="form-check text-start my-3">
             {{form.remember_me}}
             <label class="form-check-label" for="id_remember_me">
                 Remember me
             </label>
             </div>
+            
             <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; {% now 'Y' %}</p>
+            <p class="mt-5 mb-3 text-body-secondary">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
         </form>
-
-        {% if login_error %}
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                <div>
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Please enter a correct username and password. Note that both fields are case-sensitive.
-                </div>
-            </div>    
-        {% endif %}
-    
-        
+    </div>   
 {% endblock content %}
 
 
