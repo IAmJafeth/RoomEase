@@ -54,7 +54,7 @@ def signupUser(request):
                 account_form.add_error('__all__', 'Error saving account')
                 args['user_form'] = user_form
                 args['account_form'] = account_form
-                return render(request, 'auth/signup.html', args)
+                return render(request, 'auth/signup.html', args)    
             user.save()
             return redirect('login', success='true')
 
@@ -63,8 +63,8 @@ def signupUser(request):
             args['account_form'] = account_form
             return render(request, 'auth/signup.html', args)
     else:
-        user_form = SignupForm(prefix='user')
-        account_form = AccountForm(prefix='account')
+        user_form = SignupForm()
+        account_form = AccountForm()
         args['user_form'] = user_form
         args['account_form'] = account_form
         return render(request, 'auth/signup.html', args)
