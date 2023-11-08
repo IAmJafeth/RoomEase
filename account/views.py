@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from .forms import SignupForm, LoginForm, AccountForm
 
 
 # Create your views here.
 
 def loginUser(request, success=None):
+    if request.user.is_authenticated:
+        return redirect('home')
+
     args = {}
     
     if request.method == 'POST':
@@ -38,6 +42,9 @@ def loginUser(request, success=None):
         return render(request, 'auth/login.html', args)
 
 def signupUser(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
     args = {}
 
     if request.method == 'POST':
@@ -47,15 +54,15 @@ def signupUser(request):
             print("valid")
             user = user_form.save(commit=False)
             try:
-                account_form.save(user=user)
+                account_form.save(user=user, commit=False)
             except Exception as e:
                 print(e)
-                user.delete()
                 account_form.add_error('__all__', 'Error saving account')
                 args['user_form'] = user_form
                 args['account_form'] = account_form
-                return render(request, 'auth/signup.html', args)    
+                return render(request, 'auth/signup.html', args)   
             user.save()
+            account_form.save(user=user, commit=True)
             return redirect('login', success='true')
 
         else:
@@ -68,3 +75,4 @@ def signupUser(request):
         args['user_form'] = user_form
         args['account_form'] = account_form
         return render(request, 'auth/signup.html', args)
+

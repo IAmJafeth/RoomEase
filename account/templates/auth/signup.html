@@ -35,44 +35,50 @@
             <img class="mb-4" src="{% static 'img/RoomEaseLogoNTNB.png' %}" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
-            <div class="form-floating">
-            {{user_form.first_name}}
-            <label for="id_first_name">First Name</label>
-            </div>
+            <div class="d-flex flex-column flex-lg-row">
+                <div class="flex-fill">
+                    <div class="form-floating">
+                        {{user_form.first_name}}
+                        <label for="id_first_name">First Name</label>
+                    </div>
 
-            <div class="form-floating">
-            {{user_form.last_name}}
-            <label for="id_last_name">Last Name</label>
-            </div>
+                    <div class="form-floating">
+                        {{user_form.last_name}}
+                        <label for="id_last_name">Last Name</label>
+                    </div>
 
-            <div class="form-floating">
-            {{user_form.username}}
-            <label for="id_username">Username</label>
-            </div>
+                    <div class="form-floating">
+                        {{user_form.username}}
+                        <label for="id_username">Username</label>
+                    </div>
 
-            <div class="form-floating">
-            {{user_form.email}}
-            <label for="id_email">Email address</label>
-            </div>
+                    
+                </div>
+                
+                <div class="flex-fill">
+                    <div class="input-group">
+                        <span class="input-group-text" for="id_phone">+506</span>
+                        <div class="form-floating">
+                            {{account_form.phone}}
+                            <label for="id_phone">Phone Number</label>
+                        </div>
+                    </div>
 
-            <div class="input-group">
-                <span class="input-group-text" for="id_phone">+506</span>
-                <div class="form-floating">
-                    {{account_form.phone}}
-                    <label for="id_phone">Phone Number</label>
+                    <div class="form-floating">
+                        {{user_form.password1}}
+                        <label for="id_password1">Password</label>
+                    </div>
+
+                    <div class="form-floating">
+                        {{user_form.password2}}
+                        <label for="id_password2">Password Confirmation</label>
+                    </div>
                 </div>
             </div>
-
             <div class="form-floating">
-            {{user_form.password1}}
-            <label for="id_password1">Password</label>
+                {{user_form.email}}
+                <label for="id_email">Email address</label>
             </div>
-
-            <div class="form-floating">
-            {{user_form.password2}}
-            <label for="id_password2">Password Confirmation</label>
-            </div>
-
             <button class="btn btn-primary w-100 py-2 mt-5" type="submit" >Sign Up</button>
         </form>
 

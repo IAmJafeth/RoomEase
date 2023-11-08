@@ -1,0 +1,105 @@
+{% extends 'roomreservation/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h5 class=" pb-3 text-start text-center ms-5 mb-3 border-bottom d-none d-md-inline-block">Welcome {{account.user.first_name}}!</h5>
+    
+<div class="container mx-auto">
+        <div class="row">
+            <div class="col-md-6 order-md-1 order-2 left-column border-end border-dark border-1 justify-content-center ">
+                <!-- <h4 class="text-center mb-3"></h4> -->
+                {% if reservations %}
+
+                    <nav id="navbar-reservations" class="navbar bg-body-tertiary px-3 mb-3 rounded">
+                        <a class="navbar-brand text-center" href="#">Your Next Reservations</a>
+                        <ul class="nav nav-pills">
+                            {% for reservation in reservations %}
+                                {% if forloop.counter < 3 %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#{{reservation.id}}">{{reservation.title}}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if reservations.count > 2 %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">More</a>
+                                    <ul class="dropdown-menu">
+                                {% for reservation in reservations %}
+                                    {% if forloop.counter > 2 %}
+                                        <li><a class="dropdown-item" href="#{{reservation.id}}">{{reservation.title}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                    </ul>
+                                </li>
+                                
+                            {% endif %}
+                            
+                        </ul>
+                    </nav>
+                    <div class="list-group overflow-auto bg-body-tertiary p-3 rounded-2" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0" style="max-height: 600px;">
+                        {% for reservation in reservations %}
+                                <a href="#" class="list-group-item list-group-item-action mb-2" aria-current="true" id="{{ reservation.id}}">
+
+                                    <div class="d-flex w-100 justify-content-between">
+                                    
+                                    <h5 class="mb-1">{{ reservation.title }}</h5>
+                                    <small class="text-muted">{{ reservation.created_at|timesince }}</small>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><span class="fw-bold">Room:</span> {{ reservation.room }}</li>
+                                        <li class="list-group-item"><span class="fw-bold">Date:</span> {{ reservation.date }}</li>
+                                        <li class="list-group-item"><span class="fw-bold">Start Time:</span> {{ reservation.start_time }}</li>
+                                        <li class="list-group-item"><span class="fw-bold">End Time:</span> {{ reservation.end_time }}</li>
+                                    </ul>
+                                    {% if reservation.status %}
+                                        <span class="badge bg-success mt-2">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger mt-2">Inactive</span>
+                                    {% endif %}
+                                </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        <div class="text-center">
+                            <h5 class="text-center">You have no reservations.</h5>
+                            <a href="#" class="btn btn-primary">Reserve a Room</a>
+                        </div>
+                {% endif %}
+            </div>
+
+
+            <div class="col-md-6 order-md-3 order-3 right-column">
+                {% if free_rooms %}
+                    <h5 class="text-left px-4 py-3 border-top card d-inline-block bg-body-tertiary">Available Rooms</h5>
+                    {% for room in free_rooms %}
+                        <div class="card mb-3 bg-body-tertiary" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="/media/{{room.pic}}" class="object-fit-cover img-fluid " alt="{{room.name}} picture">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{room.name}}</h5>
+                                        <p class="card-text">{{room.description}}</p>
+                                        {% for reservation in next_reservation %}
+                                            {% if reservation.room.name == room.name %}
+                                                <p class="card-text"><small class="text-muted">Next Reservation: {{reservation.date}} {{reservation.start_time}} - {{reservation.end_time}}</small></p>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <a href="#" class="btn btn-primary">Reserve</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                {% endif %}
+            </div>
+
+        </div>
+
+{% endblock %}
+```

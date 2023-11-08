@@ -3,25 +3,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Account
 from twiliosms.smsrequests import check_phone
-
-
-
 class SignupForm(UserCreationForm):
 	username = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
-	email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
+	email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email', }))
 	first_name = forms.CharField(max_length=30,required=True,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(max_length=30,required=True,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))
 	password1 = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 	password2 = forms.CharField(max_length=100, required=True, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 	class Meta:
 		model = User
-		fields = ('username', 'email', 'password1', 'password2')
-
-# class Account(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     phone = models.CharField(max_length=20, null=True, blank=True)
-#     profile_pic = models.ImageField(upload_to='profile_pics', null=True, blank=True, default='profile_pics/default.jpg')
-#     active = models.BooleanField(default=True)
+		fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name',)
 
 class AccountForm(forms.ModelForm):
 	phone = forms.CharField(max_length=20, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}))
@@ -70,8 +61,6 @@ class AccountForm(forms.ModelForm):
 		if commit:
 			account.save()
 		return account
-
-	
 
 class LoginForm(AuthenticationForm):
 	username = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
