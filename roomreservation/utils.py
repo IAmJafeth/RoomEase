@@ -1,7 +1,7 @@
 from .models import Room, Reservation
 from django.utils import timezone
 
-def get_busy_reservations():
+def get_ongoing_reservations():
     reservations = Reservation.objects.all().filter(active=True, status=True)
 
     current_reservations = []
@@ -12,7 +12,7 @@ def get_busy_reservations():
     return current_reservations
 
 def get_busy_rooms():
-    current_reservations = get_busy_reservations()
+    current_reservations = get_ongoing_reservations()
     current_rooms = []
     for reservation in current_reservations:
         if not reservation.room in current_rooms:
