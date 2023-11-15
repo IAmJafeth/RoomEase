@@ -24,6 +24,7 @@ def homeSignedIn(request):
     args['free_rooms'] = get_free_rooms()
     args['busy_rooms'] = get_busy_rooms()
     args['next_reservation_room'] = [next_reservation(room) for room in args['free_rooms']]
+    args['page'] = 'home'
     
     return render(request, 'roomreservation/userhome.html', args)
 
@@ -41,6 +42,7 @@ def list_rooms(request):
 @login_required(login_url='/login')
 def reserve_room(request, room_id = None):
     args = {}
+    args['page'] = 'reserveroom'
     args['account'] = Account.objects.get(user=request.user)    
     if request.method == 'POST':
         form = ReservationForm(request.POST)
@@ -49,6 +51,11 @@ def reserve_room(request, room_id = None):
             reservation.account = args['account']
             reservation.save()
             return HttpResponse('Reservation saved.')
+        else:
+            args['form'] = form
+            print(form.errors)
+            return render(request, 'roomreservation/reserveraroom.html', args)
+
     else:
         form = ReservationForm()
         args['form'] = form

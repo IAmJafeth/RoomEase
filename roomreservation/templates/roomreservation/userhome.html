@@ -57,7 +57,7 @@
                     {% else %}
                         <div class="text-center">
                             <h5 class="text-center">You have no reservations.</h5>
-                            <a href="#" class="btn btn-primary">Reserve a Room</a>
+                            <a href="{% url 'reserve_room' %}" class="btn btn-primary">Reserve a Room</a>
                         </div>
                 {% endif %}
             </div>
@@ -81,7 +81,7 @@
                                                 <p class="card-text"><small class="text-muted">Next Reservation: {{reservation.date}} {{reservation.start_time}} - {{reservation.end_time}}</small></p>
                                             {% endif %}
                                         {% endfor %}
-                                        <a href="#" class="btn btn-primary">Reserve</a>
+                                        <a href="{% url 'reserve_room'%}{{room.id}}" class="btn btn-primary">Reserve</a>
                                     </div>
                                 </div>
                             </div>
