@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Room, Reservation
+from .forms import ReservationForm
 from account.models import Account
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -17,7 +18,6 @@ def baseHome(request):
 @login_required(login_url='/login')
 def homeSignedIn(request):
     args = {}
-    
     args['account'] = Account.objects.get(user=request.user)
     args['current_reservations_account'] = current_reservations_account(args['account'])
     args['next_reservations_account'] = all_next_reservations_account(args['account'])
@@ -38,5 +38,20 @@ def list_rooms(request):
                     'rooms': rooms,
                 })
 
-
-
+@login_required(login_url='/login')
+def reserve_room(request, room_id = None):
+    args = {}
+    args['account'] = Account.objects.get(user=request.user)    
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.account = args['account']
+            reservation.save()
+            return HttpResponse('Reservation saved.')
+    else:
+        form = ReservationForm()
+        args['form'] = form
+        if room_id:
+            form.fields['room'].initial = room_id
+        return render(request, 'roomreservation/reserveraroom.html', args)
