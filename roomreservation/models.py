@@ -1,23 +1,36 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from account.models import Account
+from django.utils import timezone
 
 # Create your models here.
 
-class Room(models.Model):
-    id = models.CharField(max_length=10, unique=True, primary_key=True)
+class SoftDelete(models.Model):
+    deleted = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+    def delete(self):
+        self.deleted = True
+        self.save()
+
+class Room(SoftDelete):
     name = models.CharField(max_length=20)
     capacity = models.IntegerField()
     description = models.TextField()
     status = models.BooleanField(default=True)
-    pic = models.ImageField(upload_to='room_pics', null=True, blank=True, default='room_pics/default.jpg')
-    active = models.BooleanField(default=True)
+    pic = models.ImageField(upload_to='room_pics', null=True, blank=True, default='room_pics/default.png')
 
     def __str__(self):
         return self.name
+    
+    def delete(self):
+        self.pic.delete()
+        self.pic = 'room_pics/deleted.png'
+        super().delete()
 
-class Reservation(models.Model):
-    id = models.CharField(max_length=10, unique=True, primary_key=True)
+class Reservation(SoftDelete):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
@@ -25,14 +38,8 @@ class Reservation(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.localtime().now())
     status = models.BooleanField(default=True)
-    active = models.BooleanField(default=True)
-
-    def clean(self):
-        print('Start time: ', self.start_time, 'End time: ', self.end_time)
-        if self.start_time >= self.end_time:
-            raise ValidationError("End time must be after start time")
 
     def __str__(self):
         return self.title

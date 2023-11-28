@@ -12,8 +12,8 @@ class CustomizedUserAdmin (UserAdmin):
     inlines = (AccountInline,)
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('user', 'phone', 'active')
-    list_filter = ('active',)
+    list_display = ('user', 'phone', 'deleted')
+    list_filter = ('deleted',)
     search_fields = ('user', 'phone')
 
 

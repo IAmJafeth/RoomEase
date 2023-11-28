@@ -2,7 +2,7 @@ from .models import Room, Reservation
 from django.utils import timezone
 
 def get_ongoing_reservations():
-    reservations = Reservation.objects.all().filter(active=True, status=True)
+    reservations = Reservation.objects.all().filter(deleted=False, status=True)
 
     current_reservations = []
     for reservation in reservations:
@@ -21,7 +21,7 @@ def get_busy_rooms():
     return current_rooms
 
 def get_free_rooms():
-    rooms = Room.objects.all().filter(active=True, status=True)
+    rooms = Room.objects.all().filter(deleted=False, status=True)
     free_rooms = []
     for room in rooms:  
         if not room in get_busy_rooms():
@@ -29,7 +29,7 @@ def get_free_rooms():
     return free_rooms
 
 def next_reservation(room):
-    reservations = Reservation.objects.all().filter(active=True, status=True, room=room).order_by('date', 'start_time')
+    reservations = Reservation.objects.all().filter(deleted=False, status=True, room=room).order_by('date', 'start_time')
     for reservation in reservations:
         if reservation.date > timezone.localdate():
             return reservation
@@ -38,7 +38,7 @@ def next_reservation(room):
                 return reservation
     return None 
 def all_next_reservations_account(account):
-    reservations = Reservation.objects.all().filter(active=True, status=True, account=account).order_by('date', 'start_time')
+    reservations = Reservation.objects.all().filter(deleted=False, status=True, account=account).order_by('date', 'start_time')
     
     next_reservations = []
     for reservation in reservations:
@@ -52,7 +52,7 @@ def all_next_reservations_account(account):
     return next_reservations
 
 def current_reservations_account(account):
-    reservations = Reservation.objects.all().filter(active=True, status=True, account=account).order_by('date', 'start_time')
+    reservations = Reservation.objects.all().filter(deleted=False, status=True, account=account).order_by('date', 'start_time')
     
     current_reservations = []
     for reservation in reservations:

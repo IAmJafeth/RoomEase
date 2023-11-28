@@ -42,7 +42,7 @@
                                     <div class="d-flex w-100 justify-content-between">
                                     
                                         <h5 class="mb-1">{{ reservation.title }}</h5>
-                                        <small class="text-muted">{{ reservation.created_at|timesince }}</small>
+                                        <small class="text-muted"> {{ reservation.created_at|timesince }}</small>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item"><span class="fw-bold">Room:</span> {{ reservation.room }}</li>
@@ -55,8 +55,8 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                        <div class="text-center">
-                            <h5 class="text-center">You have no reservations.</h5>
+                        <div class="text-center mt-5">
+                            <h5 class="text-center">You have no upcoming reservations</h5>
                             <a href="{% url 'reserve_room' %}" class="btn btn-primary">Reserve a Room</a>
                         </div>
                 {% endif %}

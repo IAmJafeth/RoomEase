@@ -32,8 +32,9 @@ def homeSignedIn(request):
 def homeSignedOut(request):
     return render(request, 'roomreservation/home.html')
 
+@login_required(login_url='/login')
 def list_rooms(request):
-    rooms = Room.objects.all().filter(active=True)
+    rooms = Room.objects.all().filter(deleted=False)
     return render(request, 'roomreservation/rooms.html',
                 {
                     'rooms': rooms,

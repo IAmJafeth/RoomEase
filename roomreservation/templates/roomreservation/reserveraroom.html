@@ -1,11 +1,11 @@
 {% extends 'roomreservation/base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Reserve Room{% endblock %}
 
 {% block content %}
 
-<h5 class=" pb-3 text-start text-center ms-5 mb-3 border-bottom d-none d-md-inline-block">Reserver your Room</h5>
+<h5 class=" pb-3 text-start text-center ms-5 mb-3 border-bottom d-none d-md-inline-block">Reserve your Room</h5>
 
 
     
@@ -17,7 +17,7 @@
                         <div>
                             <i class="fas fa-exclamation-triangle"></i>
                                 {{ form.non_field_errors|escape|striptags }}
-                                {% for field in account_form %}
+                                {% for field in form %}
                                     {% for error in field.errors %}
                                             {{ error|escape|striptags }} <br>
                                     {% endfor %}
